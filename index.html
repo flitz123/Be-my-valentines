@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Be My Valentine ❤️</title>
+
+  <style>
+    :root {
+      --bg: #fff1f2;
+      --card: #ffffff;
+      --primary: #e11d48;
+      --secondary: #fb7185;
+      --text: #4a044e;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffe4e6, #fff1f2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--text);
+    }
+
+    .page {
+      display: none;
+      width: 100%;
+      max-width: 420px;
+      padding: 24px;
+    }
+
+    .page.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .video-box {
+      width: 100%;
+      height: 220px;
+      background: black;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 16px;
+      position: relative;
+    }
+
+    button {
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .yes {
+      background: var(--primary);
+      color: white;
+    }
+
+    .no {
+      background: var(--secondary);
+      color: white;
+      position: absolute;
+      right: 0;
+    }
+
+    .back {
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--primary);
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .whatsapp {
+      margin-top: 16px;
+      display: inline-block;
+      background: #25D366;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .whatsapp:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎶 Background Music -->
+  <audio autoplay loop>
+    <source src="assets/Mariah Carey - We Belong Together (Official Music Video).mp3" type="audio/mp3">
+  </audio>
+
+  <!-- HOME -->
+  <div class="page active" id="home">
+    <div class="card">
+      <div class="video-box">
+        <video autoplay muted loop>
+          <source src="assets/Home.mp4" type="video/mp4">
+        </video>
+      </div>
+      <h1>Will you be my Valentine? 💖</h1>
+      <div class="buttons">
+        <button class="yes" onclick="showPage('yes')">Yes</button>
+        <button class="no" id="noBtn">No</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NO PAGE -->
+  <div class="page" id="no">
+    <div class="card">
+      <div class="video-box">
+        <video autoplay muted loop>
+          <source src="assets/No.mp4" type="video/mp4">
+        </video>
+      </div>
+      <h1>Are you serious? 😳</h1>
+      <div class="back" onclick="showPage('home')">← Go back</div>
+    </div>
+  </div>
+
+  <!-- YES PAGE -->
+  <div class="page" id="yes">
+    <div class="card">
+      <div class="video-box">
+        <video autoplay muted loop>
+          <source src="assets/Yes.mp4" type="video/mp4">
+        </video>
+      </div>
+      <h1>Thank you ❤️<br>You just made my day!</h1>
+
+      <!-- 📱 WhatsApp Share -->
+      <a
+        class="whatsapp"
+        target="_blank"
+        href="https://wa.me/?text=I%20just%20said%20YES%20to%20being%20your%20Valentine%20❤️"
+      >
+        Share on WhatsApp 💬
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+    }
+
+    // 🏃‍♂️ No button runs away
+    const noBtn = document.getElementById('noBtn');
+
+    noBtn.addEventListener('mouseenter', () => {
+      const parent = noBtn.parentElement;
+      const maxX = parent.offsetWidth - noBtn.offsetWidth;
+      const maxY = parent.offsetHeight - noBtn.offsetHeight;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // If they somehow click "No"
+    noBtn.addEventListener('click', () => showPage('no'));
+  </script>
+
+</body>
+</html>
