@@ -7,8 +7,6 @@
 
   <style>
     :root {
-      --bg: #fff1f2;
-      --card: #ffffff;
       --primary: #e11d48;
       --secondary: #fb7185;
       --text: #4a044e;
@@ -47,7 +45,7 @@
     }
 
     .card {
-      background: var(--card);
+      background: white;
       border-radius: 20px;
       padding: 20px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.1);
@@ -75,11 +73,12 @@
     }
 
     .buttons {
+      position: relative;
       display: flex;
       justify-content: center;
       gap: 16px;
       margin-top: 16px;
-      position: relative;
+      height: 50px;
     }
 
     button {
@@ -105,11 +104,8 @@
 
     .back {
       margin-top: 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--primary);
       cursor: pointer;
+      color: var(--primary);
       font-weight: 500;
     }
 
@@ -124,15 +120,17 @@
       font-weight: 500;
     }
 
-    .whatsapp:hover {
-      opacity: 0.9;
+    .hint {
+      font-size: 0.75rem;
+      opacity: 0.6;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
-  <!-- 🎶 Background Music -->
-  <audio autoplay loop>
+  <!-- 🎶 Background Music (NO autoplay) -->
+  <audio id="bgMusic" loop>
     <source src="assets/Mariah Carey - We Belong Together (Official Music Video).mp3" type="audio/mp3">
   </audio>
 
@@ -144,11 +142,15 @@
           <source src="assets/Home.mp4" type="video/mp4">
         </video>
       </div>
+
       <h1>Will you be my Valentine? 💖</h1>
+
       <div class="buttons">
         <button class="yes" onclick="showPage('yes')">Yes</button>
         <button class="no" id="noBtn">No</button>
       </div>
+
+      <div class="hint">🔊 Tap anywhere for music</div>
     </div>
   </div>
 
@@ -173,9 +175,9 @@
           <source src="assets/Yes.mp4" type="video/mp4">
         </video>
       </div>
+
       <h1>Thank you ❤️<br>You just made my day!</h1>
 
-      <!-- 📱 WhatsApp Share -->
       <a
         class="whatsapp"
         target="_blank"
@@ -187,15 +189,30 @@
   </div>
 
   <script>
+    const music = document.getElementById("bgMusic");
+    let musicStarted = false;
+
+    function startMusic() {
+      if (!musicStarted) {
+        music.volume = 0.4;
+        music.play().catch(() => {});
+        musicStarted = true;
+      }
+    }
+
     function showPage(pageId) {
+      startMusic();
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById(pageId).classList.add('active');
     }
 
-    // 🏃‍♂️ No button runs away
-    const noBtn = document.getElementById('noBtn');
+    // Start music on first interaction (mobile-safe)
+    document.addEventListener("click", startMusic, { once: true });
 
-    noBtn.addEventListener('mouseenter', () => {
+    // 🏃‍♂️ No button runs away
+    const noBtn = document.getElementById("noBtn");
+
+    noBtn.addEventListener("mouseenter", () => {
       const parent = noBtn.parentElement;
       const maxX = parent.offsetWidth - noBtn.offsetWidth;
       const maxY = parent.offsetHeight - noBtn.offsetHeight;
@@ -206,8 +223,7 @@
       noBtn.style.transform = `translate(${x}px, ${y}px)`;
     });
 
-    // If they somehow click "No"
-    noBtn.addEventListener('click', () => showPage('no'));
+    noBtn.addEventListener("click", () => showPage("no"));
   </script>
 
 </body>
