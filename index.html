@@ -3,9 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Ads -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6262688529196917"
-     crossorigin="anonymous">
-  </script>
+     crossorigin="anonymous"></script>
+
+  <!-- Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
   <title>Be My Valentine ❤️</title>
 
   <style>
@@ -28,6 +36,7 @@
       justify-content: center;
       align-items: center;
       color: var(--text);
+      padding: 10px;
     }
 
     .page {
@@ -90,7 +99,6 @@
       border: none;
       font-size: 1rem;
       cursor: pointer;
-      transition: 0.2s ease;
     }
 
     .yes {
@@ -112,27 +120,57 @@
       font-weight: 500;
     }
 
-    .whatsapp {
-      margin-top: 16px;
-      display: inline-block;
-      background: #25D366;
-      color: white;
-      padding: 10px 18px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
     .hint {
       font-size: 0.75rem;
       opacity: 0.6;
       margin-top: 10px;
     }
+
+    /* 🔗 SHARE BUTTONS */
+    .share-container {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;          /* <-- wrap on smaller screens */
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .share-btn {
+      padding: 10px 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: white;
+      font-size: 1rem;
+      min-width: 120px;         /* keeps buttons from collapsing */
+      transition: transform 0.2s ease;
+    }
+
+    .share-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .whatsapp { background: #25D366; }
+    .instagram { background: #E1306C; }
+    .snapchat { background: #FFFC00; color: #000; }
+
+    /* Mobile adjustments */
+    @media (max-width: 360px) {
+      h1 { font-size: 1.2rem; }
+      .share-btn { min-width: 100px; padding: 8px 12px; font-size: 0.9rem; }
+      .buttons { gap: 10px; height: auto; }
+    }
   </style>
 </head>
+
 <body>
 
-  <!-- 🎶 Background Music (NO autoplay) -->
+  <!-- 🎶 Background Music -->
   <audio id="bgMusic" loop>
     <source src="assets/Mariah Carey - We Belong Together (Official Music Video).mp3" type="audio/mp3">
   </audio>
@@ -166,7 +204,7 @@
         </video>
       </div>
       <h1>Are you serious? 😥🥺</h1>
-      <div class="back" onclick="showPage('home')">← Go back🙄</div>
+      <div class="back" onclick="showPage('home')">← Go back 🙄</div>
     </div>
   </div>
 
@@ -179,21 +217,43 @@
         </video>
       </div>
 
-      <h1>Thank you 🥰😘❤️<br>To many more, My Love🤩🥳😭😭</h1>
+      <h1>Thank you 🥰😘❤️<br>To many more. I still can't believe I get to have you as my Valentine🤩🥳😭😭</br></h1>
 
-      <a
-        class="whatsapp"
-        target="_blank"
-        href="https://wa.me/?text=I%20just%20said%20YES%20to%20being%20your%20Valentine%20❤️"
-      >
-        Share on WhatsApp 💬
-      </a>
+      <div class="share-container">
+        <a
+          class="share-btn whatsapp"
+          target="_blank"
+          href="https://wa.me/?text=I%20just%20said%20YES%20to%20being%20your%20Valentine%20❤️%20https://be-my-valentines-three.vercel.app/"
+        >
+          <i class="fas fa-share-alt"></i>
+          <i class="fab fa-whatsapp"></i>
+        </a>
+
+        <a
+          class="share-btn instagram"
+          href="https://www.instagram.com/"
+          onclick="shareInstagram(event)"
+        >
+          <i class="fas fa-share-alt"></i>
+          <i class="fab fa-instagram"></i>
+        </a>
+
+        <a
+          class="share-btn snapchat"
+          target="_blank"
+          href="https://www.snapchat.com/?text=I%20just%20said%20YES%20to%20being%20his%20Valentine%20❤️%20https://be-my-valentines-three.vercel.app/"
+        >
+          <i class="fas fa-share-alt"></i>
+          <i class="fab fa-snapchat"></i>
+        </a>
+      </div>
     </div>
   </div>
 
   <script>
     const music = document.getElementById("bgMusic");
     let musicStarted = false;
+    const shareUrl = "https://be-my-valentines-three.vercel.app/";
 
     function startMusic() {
       if (!musicStarted) {
@@ -209,10 +269,9 @@
       document.getElementById(pageId).classList.add('active');
     }
 
-    // Start music on first interaction (mobile-safe)
     document.addEventListener("click", startMusic, { once: true });
 
-    // 🏃‍♂️ No button runs away
+    /* 🏃 No button dodge + guaranteed click */
     const noBtn = document.getElementById("noBtn");
 
     noBtn.addEventListener("mouseenter", () => {
@@ -227,7 +286,17 @@
     });
 
     noBtn.addEventListener("click", () => showPage("no"));
+
+    /* 📸 Instagram auto-copy */
+    function shareInstagram(e) {
+      e.preventDefault();
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        window.open("https://www.instagram.com/", "_blank");
+      });
+    }
   </script>
 
 </body>
 </html>
+
+
